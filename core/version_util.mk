@@ -179,10 +179,9 @@ PLATFORM_SYSTEMSDK_VERSIONS := $(strip $(sort $(PLATFORM_SYSTEMSDK_VERSIONS)))
 
 ifndef PLATFORM_SECURITY_PATCH_TIMESTAMP
   # Used to indicate the matching timestamp for the security patch string in PLATFORM_SECURITY_PATCH.
-  PLATFORM_SECURITY_PATCH_TIMESTAMP := $(shell date -d 'TZ="GMT" $(PLATFORM_SECURITY_PATCH)' +%s)
+PLATFORM_SECURITY_PATCH_TIMESTAMP := $(shell python3 -c 'import time; from datetime import datetime; print(int(datetime.strptime("$(PLATFORM_SECURITY_PATCH)", "%Y-%m-%d").timestamp()))')
 endif
 .KATI_READONLY := PLATFORM_SECURITY_PATCH_TIMESTAMP
-
 # PLATFORM_BASE_OS is used to indicate the base os applied
 # to the device. Can be an arbitrary string, but must be a
 # single word.
